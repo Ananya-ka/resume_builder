@@ -1,0 +1,191 @@
+\documentclass[10pt, letterpaper]{article}
+
+% Packages:
+\usepackage[ignoreheadfoot, top=1.7cm, bottom=1.7cm, left=1.8cm, right=1.8cm, footskip=0.8cm]{geometry}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage{amsmath}
+\usepackage[colorlinks=true, urlcolor=black]{hyperref}
+\usepackage[pscoord]{eso-pic}
+\usepackage{calc}
+\usepackage{bookmark}
+\usepackage{lastpage}
+\usepackage{changepage}
+\usepackage{paracol}
+\usepackage{ifthen}
+\usepackage{needspace}
+\usepackage{iftex}
+
+% Ensure PDF is ATS-friendly:
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+
+\usepackage{charter}
+
+% Settings:
+\raggedright
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt}
+\pagestyle{empty}
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\topskip}{0pt}
+\setlength{\columnsep}{0.15cm}
+\pagenumbering{gobble}
+
+\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+\titlespacing{\section}{-1pt}{0.2cm}{0.1cm}
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\small$\bullet$}}$}
+
+% Bullet list with tight but readable spacing
+\newenvironment{highlights}{
+    \begin{itemize}[topsep=0.05cm, parsep=0.05cm, partopsep=0pt, itemsep=2pt, leftmargin=0cm + 10pt]
+}{
+    \end{itemize}
+}
+
+\newenvironment{twocolentry}[2][]{
+    \begin{adjustwidth}{0cm + 0.00001cm}{0cm + 0.00001cm}
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 4.5cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \end{adjustwidth}
+}
+
+% Document start:
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+    {\Huge \bfseries Ananya Kashyap} \\ \vspace{2pt}
+    \small \raisebox{-0.1\height}\faPhone\ +91-6398089011 ~ \href{mailto:ananyakashyap174@gmail.co}{\raisebox{-0.2\height}\faEnvelope\ \underline{ananyakashyap174@gmail.com}} ~ 
+    \href{https://linkedin.com/in/ananya-k-4571ab248}{\raisebox{-0.2\height}\faLinkedin\ \underline{Ananya Kashyap}} ~
+    \href{https://github.com/Ananya-ka}{\raisebox{-0.2\height}\faGithub\ \underline{Ananya-ka}}
+\end{center}
+\vspace{1pt}
+
+
+
+\vspace{0.6pt}
+
+%-----------PROFILE SUMMARY-----------
+\section{Profile Summary}
+    \begin{onecolentry}
+    \vspace{1pt}
+
+Production-focused AI/Data Science Intern and ECE undergraduate at MNIT Jaipur with hands-on experience in statistical analysis, EDA, feature engineering, and end-to-end ML model development for real-world BFSI decision systems. Skilled in Python, advanced SQL, machine learning, and predictive modeling.
+
+    \end{onecolentry}
+
+    \vspace{0.6pt}
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+\vspace{0.1pt}
+    \begin{onecolentry}
+        \vspace{1pt}
+        \textbf{Programming \& Data:} Python, SQL (Advanced), Pandas, NumPy, Scikit-learn \\
+        \vspace{1pt}
+        \textbf{Machine Learning \& Statistics:} Regression, Classification, Gradient Boosting, Predictive Modeling, Feature Engineering, Model Evaluation, Cross-validation, Hypothesis Testing, A/B Testing, Drift Detection \\
+        \vspace{1pt}
+
+        \textbf{Data Analysis \& Visualisation:} EDA, Statistical Analysis, Matplotlib, Seaborn, Tableau\\
+        \vspace{1pt}
+        \textbf{Big Data \& Tools:} Apache Spark, Docker, REST APIs, ETL Pipelines, Git, CI/CD\\
+         \vspace{1pt}
+        \textbf{Frameworks:} PyTorch, TensorFlow\\
+
+
+
+ 
+        
+    \end{onecolentry}
+
+ \vspace{0.6pt}
+%-----------EXPERIENCE-----------
+\section{Experience}
+\vspace{1pt}
+    \begin{twocolentry}{Feb 2026 -- Present}
+        \textbf{AI / Data Science Intern}, Darwix AI -- Gurugram, Haryana
+    \end{twocolentry}
+    \begin{highlights}
+        \item Collected, cleaned, and preprocessed structured and temporal datasets using SQL window functions and schema validation to build reliable, entity-level feature stores, reducing manual processing effort by 60\%.
+\vspace{-1pt}
+        \item Conducted EDA and cohort-based SQL segmentation to identify business trends, behavioral patterns, and predictive signals for credit eligibility modeling
+        \item Applied statistical hypothesis testing and ANOVA to validate feature contributions and improve model reliability.
+  \vspace{-1pt}
+        \item Built and evaluated end-to-end ML pipelines including feature selection, model training, cross-validation, and predictive performance analysis using AUC and precision-recall metrics.
+  \vspace{-1pt}
+        \item Productionized GMeet Assist, an NLP pipeline for structured insight extraction from meeting transcripts, enabling automated reporting and decision workflows.
+        
+
+    \end{highlights}
+
+ \vspace{0.6pt}
+
+%-----------PROJECTS-----------
+\section{Projects}
+\vspace{1pt}
+
+\noindent
+    \textbf{Predictive Health Analytics System} 
+\begin{highlights}
+    \item Conducted EDA on 1,000+ records, engineered 12+ features, and selected Lasso regression
+  over OLS/Ridge via bias-variance analysis, achieving R² $\approx$ 0.80 with strong k-fold
+  cross-validation generalization; documented preprocessing steps and findings for review.
+    \item Implemented KL divergence and PSI drift detection to monitor covariate shift
+  post-deployment, improving long-term model reliability.
+\end{highlights}
+
+
+\vspace{2pt}
+\noindent
+    \textbf{AI Menu Engineering Analyst Bot} 
+\begin{highlights}
+    \item Modeled dynamic pricing as regression on transactional time-series data; engineered elasticity proxies, day-of-week trends, and SQL-derived behavioral aggregates as features; designed low-latency (2–5s) REST inference pipeline.
+
+
+\end{highlights}
+
+
+\vspace{4pt}
+\noindent
+    \textbf{RAG-Based AI Teaching Assistant} 
+\begin{highlights}
+    \item Built a two-stage retrieval pipeline (FAISS + semantic reranking) achieving 90–95\% Top-5 recall, evaluated via NDCG/recall metrics; deployed via Docker with scalable low-latency inference APIs.
+
+\end{highlights}
+
+
+
+
+
+\section{Education}
+\vspace{1pt}
+    \begin{onecolentry}
+        Malaviya National Institute of Technology, Jaipur - Bachelor of Technology (ECE) {\{2022-2026}\}
+    \end{onecolentry}
+ 
+
+\vspace{0.6pt}
+
+\section{Certifications}
+\vspace{1pt}
+    \begin{onecolentry}
+        Microsoft - Foundations of AI \& Machine Learning | Google - Data Analytics Professional Certificate
+    \end{onecolentry}
+
+
+
+\end{document}

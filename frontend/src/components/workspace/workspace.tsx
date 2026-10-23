@@ -90,6 +90,8 @@ import { HiringObjectionView } from "@/components/careerproof/objections";
 import { InterviewDefenseView } from "@/components/careerproof/defense";
 import { ClaimHeatmapView } from "@/components/careerproof/claim-heatmap";
 import "./workspace.css";
+import CatalogWorkspace from "@/features/evidence/catalog-workspace";
+import JDWorkspace from "@/features/jd-intelligence/jd-workspace";
 
 const icons = [
   LayoutDashboard,
@@ -219,6 +221,7 @@ export default function Workspace() {
   const [directPasteText, setDirectPasteText] = useState("");
   const [directPasteName, setDirectPasteName] = useState("My Resume.txt");
   const [isTailoring, setIsTailoring] = useState(false);
+  const [jobAnalyzerTab, setJobAnalyzerTab] = useState<"engine" | "legacy">("engine");
 
   // Local & tailored bullets
   const [bullets, setBullets] = useState<Bullet[]>([]);
@@ -2163,6 +2166,67 @@ export default function Workspace() {
                     <div>
                       <div
                         style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          marginBottom: 16,
+                          background: "#17151e",
+                          border: "1px solid #2d2639",
+                          borderRadius: 8,
+                          padding: "8px 12px",
+                        }}
+                      >
+                        <div style={{ display: "flex", gap: 8 }}>
+                          <button
+                            type="button"
+                            onClick={() => setJobAnalyzerTab("engine")}
+                            style={{
+                              background: jobAnalyzerTab === "engine" ? "#3b2f52" : "#221d2b",
+                              color: jobAnalyzerTab === "engine" ? "#f5f3fa" : "#a8a2b5",
+                              border: `1px solid ${jobAnalyzerTab === "engine" ? "#8c6ec4" : "#3b3447"}`,
+                              borderRadius: 6,
+                              padding: "6px 12px",
+                              fontSize: 12,
+                              fontWeight: 600,
+                              cursor: "pointer",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 6,
+                            }}
+                          >
+                            <Target size={13} /> JD Intelligence Engine (Phase 2)
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setJobAnalyzerTab("legacy")}
+                            style={{
+                              background: jobAnalyzerTab === "legacy" ? "#3b2f52" : "#221d2b",
+                              color: jobAnalyzerTab === "legacy" ? "#f5f3fa" : "#a8a2b5",
+                              border: `1px solid ${jobAnalyzerTab === "legacy" ? "#8c6ec4" : "#3b3447"}`,
+                              borderRadius: 6,
+                              padding: "6px 12px",
+                              fontSize: 12,
+                              fontWeight: 600,
+                              cursor: "pointer",
+                            }}
+                          >
+                            Legacy Overview
+                          </button>
+                        </div>
+
+                        <div style={{ fontSize: 11, color: "#9e97aa" }}>
+                          {jobAnalyzerTab === "engine"
+                            ? "Ground-truth extraction & Universal Evidence Catalog mapping"
+                            : "Legacy target role picker"}
+                        </div>
+                      </div>
+
+                      {jobAnalyzerTab === "engine" ? (
+                        <JDWorkspace />
+                      ) : (
+                        <div>
+                      <div
+                        style={{
                           background: "#f8f6fc",
                           border: "1px solid #ede8f5",
                           borderRadius: 8,
@@ -2283,6 +2347,8 @@ export default function Workspace() {
                           </div>
                         </section>
                       </div>
+                        </div>
+                      )}
                     </div>
                   )}
 
@@ -2851,123 +2917,7 @@ export default function Workspace() {
                   )}
 
                   {/* SECTION 7: EVIDENCE VAULT */}
-                  {section === "Evidence Vault" && (
-                    <>
-                      <div
-                        style={{
-                          background: "#f8f6fc",
-                          border: "1px solid #ede8f5",
-                          borderRadius: 8,
-                          padding: "12px 16px",
-                          marginBottom: 16,
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 12,
-                        }}
-                      >
-                        <Info size={20} color="#6947ae" style={{ flexShrink: 0 }} />
-                        <div style={{ fontSize: "0.825rem", color: "#201b31", lineHeight: 1.4 }}>
-                          <strong>How this works:</strong> This is your repository of verified achievements, projects, and technologies extracted from your resumes. Every claim is anchored to source documents so your applications remain strictly factual.
-                        </div>
-                      </div>
-
-                      <div className="cp-toolbar">
-                        <label className="cp-search-field">
-                          <Search size={16} />
-                          <input
-                            aria-label="Search evidence"
-                            placeholder="Search achievements, skills, or companies…"
-                            value={query}
-                            onChange={(e) => setQuery(e.target.value)}
-                          />
-                        </label>
-                        <select
-                          aria-label="Filter evidence"
-                          value={filter}
-                          onChange={(e) => setFilter(e.target.value)}
-                        >
-                          {[
-                            "All evidence",
-                            "Experience",
-                            "Project",
-                            "Verified",
-                            "Needs context",
-                          ].map((f) => (
-                            <option key={f}>{f}</option>
-                          ))}
-                        </select>
-                        <span className="cp-small">{filteredEvidence.length} records</span>
-                      </div>
-
-                      <div className="cp-evidence-grid">
-                        {filteredEvidence.map((e) => (
-                          <button
-                            className="cp-panel cp-evidence-card"
-                            key={e.id}
-                            onClick={() => setSelectedEvidence(e)}
-                          >
-                            <div className="cp-panel-top">
-                              <span className="cp-tile-icon">
-                                <Layers size={19} />
-                              </span>
-                              <Badge tone={e.status === "Verified" ? "green" : "amber"}>
-                                {e.status === "Verified" ? (
-                                  <CheckCircle2 size={12} />
-                                ) : (
-                                  <Circle size={12} />
-                                )}{" "}
-                                {e.status}
-                              </Badge>
-                            </div>
-                            <small>{e.organization}</small>
-                            <h2>{e.title}</h2>
-                            <p>{e.text}</p>
-                            <div className="cp-tags">
-                              {e.skills.slice(0, 4).map((s) => (
-                                <Badge key={s}>{s}</Badge>
-                              ))}
-                            </div>
-                            <div className="cp-evidence-source">
-                              <Link2 size={13} />
-                              {e.source}
-                              <ArrowUpRight size={14} />
-                            </div>
-                          </button>
-                        ))}
-                      </div>
-
-                      {!filteredEvidence.length && (
-                        <div
-                          style={{
-                            textAlign: "center",
-                            padding: "40px 20px",
-                            background: "#ffffff",
-                            borderRadius: 10,
-                            border: "1px solid #e5e7eb",
-                          }}
-                        >
-                          <h3>No evidence records found</h3>
-                          <p style={{ color: "#6b7280", marginTop: 4 }}>
-                            Upload your resume to automatically extract verified achievements.
-                          </p>
-                          <Button
-                            variant="default"
-                            onClick={() => setShowUploadModal(true)}
-                            style={{ marginTop: 12, background: "#6947ae", borderColor: "#58379f" }}
-                          >
-                            <Upload size={14} /> Upload Resume
-                          </Button>
-                        </div>
-                      )}
-
-                      <div className="cp-info">
-                        <ShieldCheck size={17} />
-                        <span>
-                          Every claim is traceable to source files or candidate discovery. Click any card to inspect provenance.
-                        </span>
-                      </div>
-                    </>
-                  )}
+                  {section === "Evidence Vault" && <CatalogWorkspace />}
 
                   {/* SECTION 8: GAP RESOLVER */}
                   {section === "Gap Resolver" && (

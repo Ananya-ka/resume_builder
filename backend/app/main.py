@@ -4,6 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.routes import router
 from app.api.discovery import router as discovery_router
 from app.api.ats import router as ats_router
+from app.catalog.api import router as catalog_router
+from app.jd_intelligence.api import router as jd_router
 from app.core.database import init_db
 
 logging.basicConfig(level=logging.INFO)
@@ -34,6 +36,8 @@ def on_startup():
 app.include_router(router)
 app.include_router(discovery_router)
 app.include_router(ats_router)
+app.include_router(catalog_router)
+app.include_router(jd_router)
 
 @app.get("/")
 def read_root():

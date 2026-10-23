@@ -41,27 +41,27 @@ Traditional ATS platforms score candidate suitability using basic word overlap, 
 
 ```mermaid
 graph TD
-    Client[Next.js 16 Web Application\nTurbopack / App Router] -->|REST API Requests| Gateway[FastAPI Backend\nApplication Gateway]
+    Client["Next.js 16 Web Application"] -->|REST API Requests| Gateway["FastAPI Backend Gateway"]
     
     subgraph Core Processing Pipeline
-        Gateway --> Auth[User Context & Ownership Filter]
-        Gateway --> Ingestion[Multi-Format Ingestion Engine\nPDF / DOCX / TXT]
-        Gateway --> Matcher[ATS Semantic Matching Engine]
-        Gateway --> Discovery[Interactive Discovery Engine]
-        Gateway --> LaTeX[LaTeX / PDF Rendering Pipeline]
+        Gateway --> Auth["User Context and Ownership Filter"]
+        Gateway --> Ingestion["Multi-Format Ingestion Engine"]
+        Gateway --> Matcher["ATS Semantic Matching Engine"]
+        Gateway --> Discovery["Interactive Discovery Engine"]
+        Gateway --> LaTeX["LaTeX and PDF Rendering Pipeline"]
     end
 
     subgraph Deterministic Scoring Modules
-        Matcher --> Taxonomy[Canonical Synonym Index\nO(1) Alias Resolution]
-        Matcher --> Tenure[Deterministic Tenure Calculator\nChronology & Overlap Resolver]
-        Matcher --> Gate[Hard Eligibility Gating\nPass / Fail / Unverifiable]
-        Matcher --> Ledger[Multi-Tier Evidence Ledger]
+        Matcher --> Taxonomy["Canonical Synonym Index and Alias Resolution"]
+        Matcher --> Tenure["Deterministic Tenure Calculator"]
+        Matcher --> Gate["Hard Eligibility Gating Module"]
+        Matcher --> Ledger["Multi-Tier Evidence Ledger"]
     end
 
-    subgraph Data & Queue Layer
-        Gateway --> DB[(PostgreSQL + pgvector\nRelational & Vector Storage)]
-        Gateway --> Broker[Redis Queue Broker]
-        Broker --> Worker[Celery Worker Cluster\nAsync Document Ingestion]
+    subgraph Data and Queue Layer
+        Gateway --> DB[("PostgreSQL and pgvector Storage")]
+        Gateway --> Broker["Redis Queue Broker"]
+        Broker --> Worker["Celery Worker Cluster"]
     end
 ```
 
